@@ -162,6 +162,9 @@ body {
   fill: #b6bbc6;
   transition: fill 0.15s ease;
 }
+.active {
+  color: #4b84fe;
+}
 .menu-wrap nav li a:hover {
   color: #1b253d;
 }
@@ -344,27 +347,4 @@ body {
 .content-wrap .person-boxes .person-box .box-actions button:hover svg path,
 .content-wrap .person-boxes .person-box .box-actions button:hover svg circle {
   fill: #2b3a60;
-}
-/* Table */
-table {
-  width: 100%;
-  /* border-collapse: collapse; */
-  margin-top: 20px;
-  color: white;
-}
-
-th {
-  background-color: #1D283C; 
-  border-radius: 4px;
-}
-
-td {
-  color: #1D283C;
-  border: 1px solid #1D283C;
-  border-radius: 4px;
-}
-
-th, td {
-  padding: 10px;
-  text-align: left;
 }
