@@ -1,6 +1,5 @@
 <?php
 session_start(); // start session to access save data
-require '../php/database.php'; // connect to db to get data
 require '../php/customer.php'; // get customer data from the database
 
 // check if the user logged in properly
@@ -12,7 +11,6 @@ if (!isset($_SESSION['logged'])) {
 
 // get customer_id
 $id = $_SESSION['admin_id'];
-
 
 if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 
@@ -28,7 +26,8 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 	$electricity_bill = getMonthlyElectricityBill($conn);
 	// call function that gets total monthly bill
 	$monthly_bill = getMonthlyBill($conn);
-
+	// call function that gets customer billing data for chart
+	$customer_billing_data = getCustomerBillingData($conn);
 } else {
     echo "<script>alert('admin ID is not set');</script>";
 }
@@ -158,7 +157,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					
 					<div class="box-content">
 						<span class="big"><?php foreach ($electricity_bill as $e_bill) { echo $e_bill['total_bill']; } ?></span>
-						Electricity usage (kWh)
+						Electricity usage (MWK)
 					</div>
 				</div>
 
@@ -196,7 +195,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 									//indexLabel: "{y}", //Shows y value on all Data Points
 									indexLabelFontColor: "#5A5757",
 									indexLabelPlacement: "outside",   
-									dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+									dataPoints: <?php echo json_encode($customer_billing_data, JSON_NUMERIC_CHECK); ?>
 								}]
 							});
 							chart.render();
