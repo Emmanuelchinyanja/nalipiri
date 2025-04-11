@@ -53,9 +53,10 @@ function getMonthlyBill($conn) {
     
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-// Get customer billing data for chart
+// Get total electric and water billing data of the month for chart
 function getCustomerBillingData($conn) {
-    $stmt = $conn->prepare("SELECT * FROM billing");
+    $stmt = $conn->prepare("SELECT MONTH(date) AS month, SUM(water_bill) AS water_bill, SUM(electric_bill) AS electric_bill FROM billing GROUP BY MONTH(date)");
+    // $stmt = $conn->prepare("SELECT * FROM billing");
     $stmt->execute();
 
     $billing = $stmt->fetchAll(PDO::FETCH_ASSOC); // fetch all billing data for the customer
