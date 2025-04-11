@@ -1,17 +1,36 @@
 <?php
-include 'db.php';
+session_start();
+include '../php/database.php';
 
-$sql = "SELECT customers.room_number, usage_data.water_usage, usage_data.electricity_usage, usage_data.date 
-        FROM usage_data 
-        JOIN customers ON usage_data.customer_id = customers.id";
-$result = $conn->query($sql);
+// Handle login form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $id;
 
-$data = [];
-while ($row = $result->fetch_assoc()) {
-    $data[] = $row;
+    $stmt = $conn->prepare("SELECT * FROM `admin` WHERE username = :username AND password = :password");
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password);
+    $stmt->execute();
+
+    // Fetch the result
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $admin_id = $result['id']; // Fetch the user_id from the query result
+
+    if ($stmt->rowCount() > 0) {
+        $_SESSION['logged'] = true;
+        $_SESSION['username'] = $username;
+        $_SESSION['admin_id'] = $admin_id;
+        header("Location: ../admin/admin_dashboard.php"); // Redirect to dashboard page
+        exit(); // Ensure no further code is executed after the redirect
+    } else {
+        echo "<script>alert('Invalid login credentials')</script>";
+        header("Location: ../admin/login.php"); // Redirect to dashboard page
+        exit(); // Ensure no further code is executed after the alert
+    }
+} else {
+    echo "<script>alert(Invalid login attempt.)</script>";
+    header("Location: ../admin/index.php"); // Redirect to dashboard page
+    exit(); // Ensure no further code is executed if the request method is not POST
 }
-
-echo json_encode($data);
-
-$conn->close();
 ?>
