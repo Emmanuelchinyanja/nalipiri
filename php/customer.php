@@ -47,4 +47,11 @@ include 'database.php';
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    // Get monthly bill
+    function getMonthlyBill($conn) {
+        $stmt = $conn->prepare("SELECT MONTH(date) AS month, SUM(total_bill) AS total_bill FROM billing GROUP BY MONTH(date)");
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 ?>
