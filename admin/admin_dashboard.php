@@ -1,32 +1,32 @@
 <?php
 session_start(); // start session to access save data
-require 'php/database.php'; // connect to db to get data
+require '../php/database.php'; // connect to db to get data
 
 // check if the user logged in properly
 if (!isset($_SESSION['logged'])) {
     echo "<script>alert('You are not authorized')</script>";
     header("Location: index.php");
-    exit;
+    exit();
 }
 
 // get customer_id
-$id = $_SESSION['customer_id'];
+$id = $_SESSION['admin_id'];
 
 
-if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
+if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
     // Get billing data from the database
-    $stmt = $conn->prepare("SELECT * FROM billing WHERE customer_id = :customer_id");
-    $stmt->bindParam(':customer_id', $id);
-    $stmt->execute();
+    // $stmt = $conn->prepare("SELECT * FROM billing WHERE customer_id = :customer_id");
+    // $stmt->bindParam(':customer_id', $id);
+    // $stmt->execute();
     
-    if ($stmt->rowCount() > 0) {
-        $billing = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        echo "<script>alert('No data yet');</script>";
-    }
+    // if ($stmt->rowCount() > 0) {
+    //     $billing = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // } else {
+    //     echo "<script>alert('No data yet');</script>";
+    // }
 
 } else {
-    echo "<script>alert('User ID is not set');</script>";
+    echo "<script>alert('admin ID is not set');</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -36,7 +36,7 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
 </head>
 <body>
