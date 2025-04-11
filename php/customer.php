@@ -33,4 +33,18 @@ include 'database.php';
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    // Get monthly electricity usage
+    function getMonthlyElectricityUsage($conn) {
+        $stmt = $conn->prepare("SELECT MONTH(date) AS month, SUM(kWh_usage) AS total_usage FROM billing GROUP BY MONTH(date)");
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    // Get monthly electricity bill
+    function getMonthlyElectricityBill($conn) {
+        $stmt = $conn->prepare("SELECT MONTH(date) AS month, SUM(electric_bill) AS total_bill FROM billing GROUP BY MONTH(date)");
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 ?>
