@@ -22,10 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['username'] = $username;
         $_SESSION['customer_id'] = $customer_id;
         header("Location: ../user_dashboard.php"); // Redirect to dashboard page
+        exit(); // Ensure no further code is executed after the redirect
     } else {
-        echo "<script>alert('Invalid login credentials');</script>";
+        echo "<script>alert('Invalid login credentials')</script>";
+        header("Location: ../login.php"); // Redirect to dashboard page
+        exit(); // Ensure no further code is executed after the alert
     }
 } else {
-    echo "you failed to hack us";
+    echo "<script>alert(Invalid login attempt.)</script>";
+    header("Location: ../user_dashboard.php"); // Redirect to dashboard page
+    exit(); // Ensure no further code is executed if the request method is not POST
 }
 ?>
