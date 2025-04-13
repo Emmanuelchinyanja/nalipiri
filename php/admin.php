@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->rowCount() > 0) {
         $_SESSION['logged'] = true;
-        $_SESSION['username'] = $username;
+        $_SESSION['admin_username'] = $username;
         $_SESSION['admin_id'] = $admin_id;
         header("Location: ../admin/admin_dashboard.php"); // Redirect to dashboard page
         exit(); // Ensure no further code is executed after the redirect

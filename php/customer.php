@@ -1,5 +1,4 @@
 <?php
-require '../php/database.php'; // connect to db to get data
 // Get customer data from the database
 function getCustomerData($conn) {
     $stmt = $conn->prepare("SELECT * FROM customer");
@@ -56,7 +55,6 @@ function getMonthlyBill($conn) {
 // Get total electric and water billing data of the month for chart
 function getCustomerBillingData($conn) {
     $stmt = $conn->prepare("SELECT MONTH(date) AS month, SUM(water_bill) AS water_bill, SUM(electric_bill) AS electric_bill FROM billing GROUP BY MONTH(date)");
-    // $stmt = $conn->prepare("SELECT * FROM billing");
     $stmt->execute();
 
     $billing = $stmt->fetchAll(PDO::FETCH_ASSOC); // fetch all billing data for the customer
@@ -73,7 +71,22 @@ function getCustomerBillingData($conn) {
     } else {
         // code here incase of no billing data...
     }
+}
+// Get billing data from the database for a specific customer
+function getCustomerBilling($conn, $customer_id) {
+    $stmt = $conn->prepare("SELECT * FROM billing WHERE customer_id = :customer_id");
+    $stmt->bindParam(':customer_id', $customer_id);
+    $stmt->execute();
     
-    // return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($stmt->rowCount() > 0) {
+        return $billing = $stmt->fetchAll(PDO::FETCH_ASSOC); // fetch all billing data for the customer
+        $dataPoints = []; // initialize dataPoints array for chart data
+        foreach ($billing as $bill) {
+            $dataPoints[] = ["label" => "Water Bill", "y" => (float)$bill["water_bill"]];
+            $dataPoints[] = ["label" => "Electric Bill", "y" => (float)$bill["electric_bill"]];
+        }
+    } else {
+        return null;
+    }
 }
 ?>
