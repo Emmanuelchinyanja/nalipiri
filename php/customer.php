@@ -80,6 +80,18 @@ function getCustomerBilling($conn, $customer_id) {
     
     if ($stmt->rowCount() > 0) {
         return $billing = $stmt->fetchAll(PDO::FETCH_ASSOC); // fetch all billing data for the customer
+    } else {
+        return null;
+    }
+}
+// Get chart billing data for the customer
+function getChartBillingData($conn, $customer_id) {
+    $stmt = $conn->prepare("SELECT MONTH(date) AS month, SUM(water_bill) AS water_bill, SUM(electric_bill) AS electric_bill FROM billing WHERE customer_id = :customer_id GROUP BY MONTH(date)");
+    $stmt->bindParam(':customer_id', $customer_id);
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0) {
+        $billing = $stmt->fetchAll(PDO::FETCH_ASSOC); // fetch all billing data for the customer
         $dataPoints = []; // initialize dataPoints array for chart data
         foreach ($billing as $bill) {
             $dataPoints[] = ["label" => "Water Bill", "y" => (float)$bill["water_bill"]];

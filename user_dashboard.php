@@ -15,6 +15,8 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
 	$customer_id = $_SESSION['customer_id'];
 	// Get billing data from the database
     $billing = getCustomerBilling($conn, $customer_id);
+	// Get chart data from the database
+	$chartData = getChartBillingData($conn, $customer_id);
 } else {
     echo "<script>alert('Illegal system entry');</script>";
 }
@@ -167,7 +169,7 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
 									//indexLabel: "{y}", //Shows y value on all Data Points
 									indexLabelFontColor: "#5A5757",
 									indexLabelPlacement: "outside",   
-									dataPoints: <?php echo json_encode($billing, JSON_NUMERIC_CHECK); ?>
+									dataPoints: <?php echo json_encode($chartData, JSON_NUMERIC_CHECK); ?>
 								}]
 							});
 							chart.render();
