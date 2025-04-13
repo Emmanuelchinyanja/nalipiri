@@ -167,7 +167,7 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
 									//indexLabel: "{y}", //Shows y value on all Data Points
 									indexLabelFontColor: "#5A5757",
 									indexLabelPlacement: "outside",   
-									dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+									dataPoints: <?php echo json_encode($billing, JSON_NUMERIC_CHECK); ?>
 								}]
 							});
 							chart.render();

@@ -84,6 +84,7 @@ function getCustomerBilling($conn, $customer_id) {
         foreach ($billing as $bill) {
             $dataPoints[] = ["label" => "Water Bill", "y" => (float)$bill["water_bill"]];
             $dataPoints[] = ["label" => "Electric Bill", "y" => (float)$bill["electric_bill"]];
+            return $dataPoints; // return the dataPoints array for chart data
         }
     } else {
         return null;
