@@ -11,22 +11,15 @@ if (!isset($_SESSION['logged'])) {
 }
 
 if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
-	// get admin
-	$id = $_SESSION['admin_id'];
-	// call function that gets customer count
-	$customer = getCustomerCount($conn);
-	// call function that gets monthly water usage
-	$water_usage = getMonthlyWaterUsage($conn);
-	// call function that gets monthly water bill
-	$water_bill = getMonthlyWaterBill($conn);
-	// call function that gets monthly electricity usage
-	$electricity_usage = getMonthlyElectricityUsage($conn);
-	// call function that gets monthly electricity bill
-	$electricity_bill = getMonthlyElectricityBill($conn);
-	// call function that gets total monthly bill
-	$monthly_bill = getMonthlyBill($conn);
-	// call function that gets customer billing data for chart
-	$customer_billing_data = getCustomerBillingData($conn);
+	$id = $_SESSION['admin_id']; // get admin id from session
+	$customer = new Customer($conn); // create a new customer object
+	$customerCount = $customer->getCustomerCount(); // call function that gets customer count
+	$water_usage = $customer->getMonthlyWaterUsage(); // call function that gets monthly water usage
+	$water_bill = $customer->getMonthlyWaterBill(); // call function that gets monthly water bill
+	$electricity_usage = $customer->getMonthlyElectricityUsage(); // call function that gets monthly electricity usage
+	$electricity_bill = $customer->getMonthlyElectricityBill(); // call function that gets monthly electricity bill
+	$monthly_bill = $customer->getMonthlyBill(); // call function that gets total monthly bill
+	$customer_billing_data = $customer->getCustomerBillingData(); // call function that gets customer billing data for chart
 } else {
     echo "<script>alert('admin ID is not set');</script>";
 }
@@ -111,7 +104,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					</div>
 					
 					<div class="box-content">
-						<span class="big"><?php echo $customer; ?></span>
+						<span class="big"><?php echo $customerCount; ?></span>
 						Total customers
 					</div>
 				</div>
