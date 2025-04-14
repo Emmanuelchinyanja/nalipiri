@@ -11,12 +11,10 @@ if (!isset($_SESSION['logged'])) {
 }
 
 if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
-	// get customer_id from session
-	$customer_id = $_SESSION['customer_id'];
-	// Get billing data from the database
-    $billing = getCustomerBilling($conn, $customer_id);
-	// Get chart data from the database
-	$chartData = getChartBillingData($conn, $customer_id);
+	$customer_id = $_SESSION['customer_id']; // get customer_id from session
+	$customer = new Customer($conn); // create a new customer object
+	$billing = $customer->getCustomerBilling($customer_id); // Get billing data from the database
+	$chartData = $customer->getChartBillingData($customer_id); // Get chart data from the database
 } else {
     echo "<script>alert('Illegal system entry');</script>";
 }
