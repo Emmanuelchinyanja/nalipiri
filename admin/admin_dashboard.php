@@ -1,5 +1,6 @@
 <?php
 session_start(); // start session to access save data
+require '../php/database.php'; // connect to db to get data
 require '../php/customer.php'; // get customer data from the database
 
 // check if the user logged in properly
@@ -9,25 +10,16 @@ if (!isset($_SESSION['logged'])) {
     exit();
 }
 
-// get customer_id
-$id = $_SESSION['admin_id'];
-
 if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
-
-	// call function that gets customer count
-	$customer = getCustomerCount($conn);
-	// call function that gets monthly water usage
-	$water_usage = getMonthlyWaterUsage($conn);
-	// call function that gets monthly water bill
-	$water_bill = getMonthlyWaterBill($conn);
-	// call function that gets monthly electricity usage
-	$electricity_usage = getMonthlyElectricityUsage($conn);
-	// call function that gets monthly electricity bill
-	$electricity_bill = getMonthlyElectricityBill($conn);
-	// call function that gets total monthly bill
-	$monthly_bill = getMonthlyBill($conn);
-	// call function that gets customer billing data for chart
-	$customer_billing_data = getCustomerBillingData($conn);
+	$id = $_SESSION['admin_id']; // get admin id from session
+	$customer = new Customer($conn); // create a new customer object
+	$customerCount = $customer->getCustomerCount(); // call function that gets customer count
+	$water_usage = $customer->getMonthlyWaterUsage(); // call function that gets monthly water usage
+	$water_bill = $customer->getMonthlyWaterBill(); // call function that gets monthly water bill
+	$electricity_usage = $customer->getMonthlyElectricityUsage(); // call function that gets monthly electricity usage
+	$electricity_bill = $customer->getMonthlyElectricityBill(); // call function that gets monthly electricity bill
+	$monthly_bill = $customer->getMonthlyBill(); // call function that gets total monthly bill
+	$customer_billing_data = $customer->getCustomerBillingData(); // call function that gets customer billing data for chart
 } else {
     echo "<script>alert('admin ID is not set');</script>";
 }
@@ -57,7 +49,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 			<button>
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M13.094 2.085l-1.013-.082a1.082 1.082 0 0 0-.161 0l-1.063.087C6.948 2.652 4 6.053 4 10v3.838l-.948 2.846A1 1 0 0 0 4 18h4.5c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5H20a1 1 0 0 0 .889-1.495L20 13.838V10c0-3.94-2.942-7.34-6.906-7.915zM12 19.5c-.841 0-1.5-.659-1.5-1.5h3c0 .841-.659 1.5-1.5 1.5zM5.388 16l.561-1.684A1.03 1.03 0 0 0 6 14v-4c0-2.959 2.211-5.509 5.08-5.923l.921-.074.868.068C15.794 4.497 18 7.046 18 10v4c0 .107.018.214.052.316l.56 1.684H5.388z"/></svg>
 			</button>
-			<a href="php/logout.php"><button>
+			<a href="../php/logout.php"><button>
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 21c4.411 0 8-3.589 8-8 0-3.35-2.072-6.221-5-7.411v2.223A6 6 0 0 1 18 13c0 3.309-2.691 6-6 6s-6-2.691-6-6a5.999 5.999 0 0 1 3-5.188V5.589C6.072 6.779 4 9.65 4 13c0 4.411 3.589 8 8 8z"/><path d="M11 2h2v10h-2z"/></svg>
 			</button>
             </a>
@@ -70,7 +62,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 				<img src="https://images.unsplash.com/photo-1440589473619-3cde28941638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=42ebdb92a644e864e032a2ebccaa25b6&auto=format&fit=crop&w=100&q=80" alt="Amanda King">
 			</div>
 			<figcaption>
-                <?php echo $_SESSION['username']; ?>
+                <?php echo $_SESSION['admin_username']; ?>
 			</figcaption>
 		</figure>
 	
@@ -82,19 +74,19 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					<li>
 						<a href="#">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 4H3a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm-1 14H4V9.227l7.335 6.521a1.003 1.003 0 0 0 1.33-.001L20 9.227V18zm0-11.448l-8 7.11-8-7.111V6h16v.552z"/></svg>
-							Messages
+							Dashboard
 						</a>
 					</li>
 					<li>
 						<a href="#">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,3h-4V2h-2v1H9V2H7v1H3C2.447,3,2,3.447,2,4v17c0,0.553,0.447,1,1,1h18c0.553,0,1-0.447,1-1V4C22,3.447,21.553,3,21,3z M7,5v1h2V5h6v1h2V5h3v3H4V5H7z M4,20V10h16v10H4z"/><path d="M11,15.586l-1.793-1.793l-1.414,1.414l2.5,2.5C10.488,17.902,10.744,18,11,18s0.512-0.098,0.707-0.293l5-5l-1.414-1.414 L11,15.586z"/></svg>
-							Invoice
+							Customers
 						</a>
 					</li>
 					<li>
 						<a href="#">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M16 12h2v3h-2z"/><path d="M21 7h-1V4a1 1 0 0 0-1-1H5c-1.206 0-3 .799-3 3v11c0 2.201 1.794 3 3 3h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zM5 5h13v2H5.012C4.55 6.988 4 6.805 4 6s.55-.988 1-1zm15 13H5.012C4.55 17.988 4 17.805 4 17V8.833c.346.115.691.167 1 .167h15v9z"/></svg>
-							Wallet
+							Billing
 						</a>
 					</li>
 				</ul>
@@ -112,7 +104,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					</div>
 					
 					<div class="box-content">
-						<span class="big"><?php echo $customer; ?></span>
+						<span class="big"><?php echo $customerCount; ?></span>
 						Total customers
 					</div>
 				</div>

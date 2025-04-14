@@ -1,6 +1,7 @@
 <?php
 session_start(); // start session to access save data
 require 'php/database.php'; // connect to db to get data
+require 'php/customer.php'; // get customer data from the database
 
 // check if the user logged in properly
 if (!isset($_SESSION['logged'])) {
@@ -10,26 +11,10 @@ if (!isset($_SESSION['logged'])) {
 }
 
 if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
-	$id = $_SESSION['customer_id']; // get customer_id from session
-	// Get billing data from the database
-    $stmt = $conn->prepare("SELECT * FROM billing WHERE customer_id = :customer_id");
-    $stmt->bindParam(':customer_id', $id);
-    $stmt->execute();
-
-	$billing = $stmt->fetchAll(PDO::FETCH_ASSOC); // fetch all billing data for the customer
-	$dataPoints = []; // initialize dataPoints array for chart data
-
-	// check if the billing data is not empty
-    if (!empty($billing)) {
-		// loop through the billing data and add it to the dataPoints array		
-		$count = 0;
-		foreach ($billing as $bill) {
-            $dataPoints[] = ["label" => "Water Bill", "y" => (float)$bill["water_bill"]];
-            $dataPoints[] = ["label" => "Electric Bill", "y" => (float)$bill["electric_bill"]];
-        }
-    } else {
-        // code here incase of no billing data...
-    }
+	$customer_id = $_SESSION['customer_id']; // get customer_id from session
+	$customer = new Customer($conn); // create a new customer object
+	$billing = $customer->getCustomerBilling($customer_id); // Get billing data from the database
+	$chartData = $customer->getChartBillingData($customer_id); // Get chart data from the database
 } else {
     echo "<script>alert('Illegal system entry');</script>";
 }
@@ -183,7 +168,7 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
 									//indexLabel: "{y}", //Shows y value on all Data Points
 									indexLabelFontColor: "#5A5757",
 									indexLabelPlacement: "outside",   
-									dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+									dataPoints: <?php echo json_encode($chartData, JSON_NUMERIC_CHECK); ?>
 								}]
 							});
 							chart.render();
