@@ -1,6 +1,7 @@
 <?php
 session_start(); // start session to access save data
 require '../php/database.php'; // connect to db to get data
+require '../php/customer.php'; // include customer class to get customer data
 
 // check if the user logged in properly
 if (!isset($_SESSION['logged'])) {
@@ -29,8 +30,8 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
     <title>Invoice</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../css/table.css">
 
 </head>
 <body>
@@ -61,7 +62,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 				<img src="https://images.unsplash.com/photo-1440589473619-3cde28941638?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=42ebdb92a644e864e032a2ebccaa25b6&auto=format&fit=crop&w=100&q=80" alt="Amanda King">
 			</div>
 			<figcaption>
-                <?php echo $_SESSION['username']; ?>
+                <?php echo $_SESSION['admin_username']; ?>
 			</figcaption>
 		</figure>
 	
@@ -77,7 +78,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 						</a>
 					</li>
 					<li>
-						<a href="#" class="active">
+						<a href="customers.php" class="active">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 4H3a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm-1 14H4V9.227l7.335 6.521a1.003 1.003 0 0 0 1.33-.001L20 9.227V18zm0-11.448l-8 7.11-8-7.111V6h16v.552z"/></svg>
 							Customers
 						</a>
@@ -106,21 +107,23 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
               <tr>
                   <th>Username</th>
                   <th>Electricity Usage</th>
-                  <th>Water Bill</th>
-                  <th>Electricity Bill</th>
+				  <th>Electricity Bill</th>
+                  <th>Water Usage</th>
+				  <th>Water Bill</th>
                   <th>Total Amount</th>
                   <th>Registered</th>
 				  <th>Day</th>
               </tr>
           </thead>
           <tbody>
-              <?php foreach ($customer as $people) { ?>
+              <?php foreach ($customers as $people) { ?>
                   <tr>
                       <td><?php echo $people['username']; ?></td>
                       <td><?php echo $people['kWh_usage'] . 'kWh'; ?></td>
+					  <td><?php echo 'MK' . $people['electric_bill']; ?></td>
                       <td><?php echo 'MK' . $people['water_usage']; ?></td>
-                      <td><?php echo 'MK' . $people['kWh_usage']; ?></td>
-                      <td><?php echo 'MK' . $people['water_usage']; ?></td>
+                      <td><?php echo 'MK' . $people['water_bill']; ?></td>
+					  <td><?php echo 'MK' . $people['total_bill']; ?></td>
                       <td><?php echo $people['date_registered']; ?></td>
 					  <td><?php
 					  			$transaction_datetime = $people['date'];
