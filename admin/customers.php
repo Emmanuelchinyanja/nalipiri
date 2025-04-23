@@ -16,15 +16,10 @@ $id = $_SESSION['admin_id'];
 if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
     $id = $_SESSION['admin_id']; // get admin id from session
 	$customer = new Customer($conn); // create a new customer object
-    
-    if ($stmt->rowCount() > 0) {
-        $billing = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        echo "<script>alert('No data yet');</script>";
-    }
+	$customers = $customer->getAllCustomers();
 
 } else {
-    echo "<script>alert('User ID is not set');</script>";
+    echo "<script>alert('Admin ID is not set');</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -109,12 +104,12 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
         <table>
           <thead>
               <tr>
-                  <th>Water Usage</th>
+                  <th>Username</th>
                   <th>Electricity Usage</th>
                   <th>Water Bill</th>
                   <th>Electricity Bill</th>
                   <th>Total Amount</th>
-                  <th>Date</th>
+                  <th>Registered</th>
 				  <th>Day</th>
               </tr>
           </thead>
