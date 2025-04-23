@@ -111,6 +111,17 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
 						Electric Bill (MWK)
 					</div>
 				</div>
+
+				<div class="info-box">
+					<div class="box-icon">
+						<svg fill="#99a0b0" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 371.409 371.409" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M270.265,149.448c-36.107-47.124-70.38-78.948-73.439-141.372c0-1.836-0.612-3.06-1.836-4.284 c-0.612-3.06-3.672-4.896-6.732-3.06c-3.672,0-6.731,2.448-6.731,6.732c-77.112,83.232-207.468,294.372-43.452,354.959 c74.052,27.541,157.896-9.791,172.584-90.576C318.614,228.396,295.969,182.497,270.265,149.448z M138.686,323.256 c-17.748-10.404-28.764-31.211-34.272-49.572c-2.448-9.18-3.672-18.359-3.06-27.539c3.672-15.912,8.568-31.213,14.076-46.512 c3.06,13.463,9.18,26.928,17.748,36.719c19.584,21.422,59.364,34.273,70.38,61.201c6.732,16.523-19.584,30.6-30.6,34.271 C161.33,335.496,148.477,329.377,138.686,323.256z"></path> </g> </g></svg>
+					</div>
+					
+					<div class="box-content">
+						<span class="big"><?php foreach ($billing as $bill) { echo $bill['water_usage']; } ?></span>
+						Water usage (L)
+					</div>
+				</div>
 				
 				<div class="info-box">
 					<div class="box-icon">
