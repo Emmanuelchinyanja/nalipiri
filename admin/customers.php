@@ -106,26 +106,29 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 				  <th>Water Bill</th>
                   <th>Total Amount</th>
                   <th>Registered</th>
-				  <th>Day</th>
+				  <th>Invoice</th>
               </tr>
           </thead>
           <tbody>
               <?php foreach ($customers as $people) { ?>
                   <tr>
-                      <td><?php echo $people['username']; ?></td>
-                      <td><?php echo $people['kWh_usage'] . 'kWh'; ?></td>
-					  <td><?php echo 'MK' . $people['electric_bill']; ?></td>
-                      <td><?php echo 'MK' . $people['water_usage']; ?></td>
-                      <td><?php echo 'MK' . $people['water_bill']; ?></td>
-					  <td><?php echo 'MK' . $people['total_bill']; ?></td>
-                      <td><?php echo $people['date_registered']; ?></td>
-					  <td><?php
-					  			$transaction_datetime = $people['date'];
-								//Convert the datetime to a DateTime object
-								$date = new DateTime($transaction_datetime);
-								$day_of_week = $date->format('l');
-					  			echo $day_of_week; 
-							?>
+						<td><?php echo $people['username']; ?></td>
+						<td><?php echo $people['kWh_usage'] . 'kWh'; ?></td>
+						<td><?php echo 'MK' . $people['electric_bill']; ?></td>
+						<td><?php echo $people['water_usage'] . 'L'; ?></td>
+						<td><?php echo 'MK' . $people['water_bill']; ?></td>
+						<td><?php echo 'MK' . $people['total_bill']; ?></td>
+						<td><?php echo $people['date_registered']; ?></td>
+					  	<td><a href="invoice.php?id=<?php echo $people['customer_id']; ?>" class="btn"><button>Invoice</button></a></td>
+				  </tr>
+			  <?php } ?>
+			  <?php if (empty($customers)) { ?>
+				  <tr>
+					  <td colspan="8" style="text-align: center;">No customers found.</td>
+				  </tr>
+			  <?php } else { ?>
+				  <tr>
+					  <td colspan="8" style="text-align: center;">Total Customers: <?php echo count($customers); ?>
 						</td>
                   </tr>
               <?php } ?>
