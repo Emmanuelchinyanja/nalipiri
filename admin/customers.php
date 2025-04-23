@@ -16,7 +16,7 @@ $id = $_SESSION['admin_id'];
 if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
     $id = $_SESSION['admin_id']; // get admin id from session
 	$customer = new Customer($conn); // create a new customer object
-	$customers = $customer->getAllCustomers();
+	$customers = $customer->getCustomerWithBilling();
 
 } else {
     echo "<script>alert('Admin ID is not set');</script>";
@@ -114,16 +114,16 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
               </tr>
           </thead>
           <tbody>
-              <?php foreach ($billing as $bill) { ?>
+              <?php foreach ($customer as $people) { ?>
                   <tr>
-                      <td><?php echo $bill['water_usage'] . 'L'; ?></td>
-                      <td><?php echo $bill['kWh_usage'] . 'kWh'; ?></td>
-                      <td><?php echo 'MK' . $bill['water_usage'] * 100; ?></td>
-                      <td><?php echo 'MK' . $bill['kWh_usage'] * 150; ?></td>
-                      <td><?php echo 'MK' . $bill['water_usage'] * 100 + $bill['kWh_usage'] * 150; ?></td>
-                      <td><?php echo $bill['date']; ?></td>
+                      <td><?php echo $people['username']; ?></td>
+                      <td><?php echo $people['kWh_usage'] . 'kWh'; ?></td>
+                      <td><?php echo 'MK' . $people['water_usage']; ?></td>
+                      <td><?php echo 'MK' . $people['kWh_usage']; ?></td>
+                      <td><?php echo 'MK' . $people['water_usage']; ?></td>
+                      <td><?php echo $people['date_registered']; ?></td>
 					  <td><?php
-					  			$transaction_datetime = $bill['date'];
+					  			$transaction_datetime = $people['date'];
 								//Convert the datetime to a DateTime object
 								$date = new DateTime($transaction_datetime);
 								$day_of_week = $date->format('l');

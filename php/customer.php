@@ -13,6 +13,13 @@ class Customer {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Retrieve customer data including billing
+    public function getCustomerWithBilling() {
+        $stmt = $this->conn->prepare("SELECT customer.*, billing.* FROM customer LEFT JOIN billing ON customer.id = billing.customer_id");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Get the total number of customers
     public function getCustomerCount() {
         $stmt = $this->conn->prepare("SELECT COUNT(*) FROM customer");
