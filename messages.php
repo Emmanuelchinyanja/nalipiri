@@ -1,6 +1,7 @@
 <?php
 session_start(); // start session to access save data
 require 'php/database.php'; // connect to db to get data
+require 'php/messages.php'; // include messages class
 
 // check if the user logged in properly
 if (!isset($_SESSION['logged'])) {
@@ -9,21 +10,12 @@ if (!isset($_SESSION['logged'])) {
     exit;
 }
 
-// get customer_id
-$id = $_SESSION['customer_id'];
-
-
 if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
-    // Get billing data from the database
-    $stmt = $conn->prepare("SELECT * FROM billing WHERE customer_id = :customer_id");
-    $stmt->bindParam(':customer_id', $id);
-    $stmt->execute();
-    
-    if ($stmt->rowCount() > 0) {
-        $billing = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        echo "<script>alert('No data yet');</script>";
-    }
+    // get customer_id
+    $id = $_SESSION['customer_id'];
+    // get user massages
+    $messages = new Messages($conn);
+    $chats = $messages->getMessages($id);
 
 } else {
     echo "<script>alert('User ID is not set');</script>";
@@ -33,7 +25,7 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>Invoice</title>
+    <title>Message</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="css/style.css">
@@ -121,22 +113,14 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
               </tr>
           </thead>
           <tbody>
-              <?php foreach ($billing as $bill) { ?>
+              <?php foreach ($chats as $chat) { ?>
                   <tr>
-                      <td><?php echo $bill['water_usage'] . 'L'; ?></td>
-                      <td><?php echo $bill['kWh_usage'] . 'kWh'; ?></td>
-                      <td><?php echo 'MK' . $bill['water_usage'] * 100; ?></td>
-                      <td><?php echo 'MK' . $bill['kWh_usage'] * 150; ?></td>
-                      <td><?php echo 'MK' . $bill['water_usage'] * 100 + $bill['kWh_usage'] * 150; ?></td>
-                      <td><?php echo $bill['date']; ?></td>
-					  <td><?php
-					  			$transaction_datetime = $bill['date'];
-								//Convert the datetime to a DateTime object
-								$date = new DateTime($transaction_datetime);
-								$day_of_week = $date->format('l');
-					  			echo $day_of_week; 
-							?>
-						</td>
+                      <td><?php echo $chat['water_usage'] . 'L'; ?></td>
+                      <td><?php echo $chat['kWh_usage'] . 'kWh'; ?></td>
+                      <td><?php echo 'MK' . $chat['water_usage'] * 100; ?></td>
+                      <td><?php echo 'MK' . $chat['kWh_usage'] * 150; ?></td>
+                      <td><?php echo 'MK' . $chat['water_usage'] * 100 + $chat['kWh_usage'] * 150; ?></td>
+                      <td><?php echo $chat['date']; ?></td>
                   </tr>
               <?php } ?>
           </tbody>
