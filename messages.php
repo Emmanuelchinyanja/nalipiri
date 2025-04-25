@@ -103,23 +103,14 @@ if (isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id'])) {
         <table>
           <thead>
               <tr>
-                  <th>Water Usage</th>
-                  <th>Electricity Usage</th>
-                  <th>Water Bill</th>
-                  <th>Electricity Bill</th>
-                  <th>Total Amount</th>
+                  <th>Message</th>
                   <th>Date</th>
-				  <th>Day</th>
               </tr>
           </thead>
           <tbody>
               <?php foreach ($chats as $chat) { ?>
                   <tr>
-                      <td><?php echo $chat['water_usage'] . 'L'; ?></td>
-                      <td><?php echo $chat['kWh_usage'] . 'kWh'; ?></td>
-                      <td><?php echo 'MK' . $chat['water_usage'] * 100; ?></td>
-                      <td><?php echo 'MK' . $chat['kWh_usage'] * 150; ?></td>
-                      <td><?php echo 'MK' . $chat['water_usage'] * 100 + $chat['kWh_usage'] * 150; ?></td>
+                      <td><?php echo $chat['message']; ?></td>
                       <td><?php echo $chat['date']; ?></td>
                   </tr>
               <?php } ?>
