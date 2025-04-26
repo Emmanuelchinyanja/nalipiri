@@ -32,6 +32,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="../css/style.css">
 	<link rel="stylesheet" href="../css/table.css">
+	<link rel="stylesheet" href="../css/button.css">
 
 </head>
 <body>
@@ -97,8 +98,9 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 	
 	<main class="content-wrap">
 		<!-- add customer -->
-		 <button class="btn"><a href="add_customer.php">Add Customer</a></button>
-<!-- view customers -->
+		<a href="add_customer.php"><button  class="button-3">Add Customer</button></a>
+		<br><br>
+		<!-- view customers -->
         <table>
           <thead>
               <tr>
@@ -122,7 +124,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 						<td><?php echo 'MK' . $people['water_bill']; ?></td>
 						<td><?php echo 'MK' . $people['total_bill']; ?></td>
 						<td><?php echo $people['date_registered']; ?></td>
-					  	<td><a href="invoice.php?id=<?php echo $people['customer_id']; ?>" class="btn"><button>Invoice</button></a></td>
+					  	<td><a href="invoice.php?id=<?php echo $people['customer_id']; ?>"><button class="button-3">Invoice</button></a></td>
 				  </tr>
 			  <?php } ?>
 			  <?php if (empty($customers)) { ?>
