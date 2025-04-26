@@ -18,7 +18,8 @@ table {
   }
   table thead tr {
     height: 60px;
-    background: #B58534;
+    background: #4B84FE;
+    color: white;
     font-size: 16px;
   }
   table tbody tr {
