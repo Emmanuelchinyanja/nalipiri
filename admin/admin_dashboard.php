@@ -160,7 +160,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					
 					<div class="box-content">
 						<span class="big"><?php foreach ($monthly_bill as $t_bill) { echo $t_bill['total_bill']; } ?></span>
-						monthly bill (MWK)
+						Monthly bill (MWK)
 					</div>
 				</div>
 			</section>
