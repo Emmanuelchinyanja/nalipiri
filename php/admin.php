@@ -24,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../admin/admin_dashboard.php"); // Redirect to dashboard page
         exit(); // Ensure no further code is executed after the redirect
     } else {
-        echo "<script>alert('Invalid login credentials')</script>";
-        header("Location: ../admin/login.php"); // Redirect to dashboard page
+        $_SESSION['error'] = "Invalid username or password"; // Set error message in session
+        header("Location: ../admin/index.php?invalid_credentials"); // Redirect to dashboard page
         exit(); // Ensure no further code is executed after the alert
     }
 } else {

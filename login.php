@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (isset($_SESSION['error'])) {
+    $error = "Invalid username or password"; // Retrieve error message from session
+    unset($_SESSION['error']); // Clear the error message after displaying it
+} else {
+    $error = null; // Initialize error variable if not set
+}
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <body>
@@ -16,6 +26,12 @@
         <div class="shape"></div>
     </div>
     <form action="php/login.php" method="POST">
+        <!-- display error message -->
+        <?php if(!empty($error)) { ?>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $error; ?>
+            </div>
+        <?php } ?>
         <h3>Login Here</h3>
 
         <label for="username">Username</label>
