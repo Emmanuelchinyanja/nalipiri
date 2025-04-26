@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); // Ensure no further code is executed after the alert
     }
 } else {
-    echo "<script>alert(Invalid login attempt.)</script>";
+    $_SESSION['error'] = "Invalid login attempt"; // Set error message in session
     header("Location: ../admin/index.php"); // Redirect to dashboard page
     exit(); // Ensure no further code is executed if the request method is not POST
 }

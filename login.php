@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['error'])) {
-    $error = "Invalid username or password"; // Retrieve error message from session
+    $error = $_SESSION['error']; // Retrieve error message from session
     unset($_SESSION['error']); // Clear the error message after displaying it
 } else {
     $error = null; // Initialize error variable if not set
