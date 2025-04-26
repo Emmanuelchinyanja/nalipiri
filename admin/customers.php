@@ -96,6 +96,9 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 	</header>
 	
 	<main class="content-wrap">
+		<!-- add customer -->
+		 <button class="btn"><a href="add_customer.php">Add Customer</a></button>
+<!-- view customers -->
         <table>
           <thead>
               <tr>
