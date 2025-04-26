@@ -50,7 +50,7 @@ class Customer {
 
     // Get monthly electricity bill
     public function getMonthlyElectricityBill() {
-        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(electric_bill) AS total_bill FROM billing GROUP BY MONTH(date)");
+        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(electric_bill) AS total_bill FROM billing");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
