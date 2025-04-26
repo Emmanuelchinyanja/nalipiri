@@ -115,7 +115,13 @@ class Customer {
 
     // Get billing data from the database for a specific customer
     public function getCustomerBilling($customerId) {
-        $stmt = $this->conn->prepare("SELECT * FROM billing WHERE customer_id = :customer_id");
+        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, 
+        SUM(water_usage) AS water_usage, 
+        SUM(kWh_usage) AS kWh_usage, 
+        SUM(water_bill) AS water_bill, 
+        SUM(electric_bill) AS electric_bill,
+        SUM(total_bill) AS total_bill 
+        FROM billing WHERE customer_id = :customer_id");
         $stmt->bindParam(':customer_id', $customerId, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
