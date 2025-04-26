@@ -115,7 +115,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					</div>
 					
 					<div class="box-content">
-						<span class="big"><?php foreach ($water_usage as $w_usage) { echo $w_usage['total_usage']; } ?></span>
+						<span class="big"><?php foreach($water_usage as $w_usage) {echo $w_usage['total_usage'];} ?></span>
 						Water usage (L)
 					</div>
 				</div>

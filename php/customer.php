@@ -29,7 +29,7 @@ class Customer {
 
     // Get monthly water usage
     public function getMonthlyWaterUsage() {
-        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(water_usage) AS total_usage FROM billing GROUP BY MONTH(date)");
+        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(water_usage) AS total_usage FROM billing");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
