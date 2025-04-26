@@ -149,7 +149,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					
 					<div class="box-content">
 						<span class="big"><?php foreach ($electricity_bill as $e_bill) { echo $e_bill['total_bill']; } ?></span>
-						Electricity usage (MWK)
+						Electricity bill (MWK)
 					</div>
 				</div>
 
