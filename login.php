@@ -26,12 +26,6 @@ if (isset($_SESSION['error'])) {
         <div class="shape"></div>
     </div>
     <form action="php/login.php" method="POST">
-        <!-- display error message -->
-        <?php if(!empty($error)) { ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $error; ?>
-            </div>
-        <?php } ?>
         <h3>Login Here</h3>
 
         <label for="username">Username</label>
@@ -44,6 +38,13 @@ if (isset($_SESSION['error'])) {
         <div class="home-link">
             <a href="index.php">Exit</a>
         </div>
+
+        <!-- display error message -->
+        <?php if(!empty($error)) { ?>
+            <div class="alert alert-danger" role="alert" style="text-align: center; margin-top: 10px;">
+                <?php echo $error; ?>
+            </div>
+        <?php } ?>
         
         <!-- <div class="social">
           <div class="go"><i class="fab fa-google"></i>  Google</div>
