@@ -43,7 +43,7 @@ class Customer {
 
     // Get monthly electricity usage
     public function getMonthlyElectricityUsage() {
-        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(kWh_usage) AS total_usage FROM billing GROUP BY MONTH(date)");
+        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(kWh_usage) AS total_usage FROM billing");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
