@@ -57,7 +57,7 @@ class Customer {
 
     // Get monthly bill
     public function getMonthlyBill() {
-        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(total_bill) AS total_bill FROM billing GROUP BY MONTH(date)");
+        $stmt = $this->conn->prepare("SELECT MONTH(date) AS month, SUM(total_bill) AS total_bill FROM billing");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
