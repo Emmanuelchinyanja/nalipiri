@@ -89,6 +89,9 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 							Billing
 						</a>
 					</li>
+					<li>
+						<a href="usage_report.php"> view usage report</a>
+					</li>
 				</ul>
 			</section>
 
@@ -197,6 +200,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 						<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 					</canvas>
 				</div>
+
 			</section>
 		</div>
 	</main>
