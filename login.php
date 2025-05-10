@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (isset($_SESSION['error'])) {
+    $error = $_SESSION['error']; // Retrieve error message from session
+    unset($_SESSION['error']); // Clear the error message after displaying it
+} else {
+    $error = null; // Initialize error variable if not set
+}
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <body>
@@ -28,6 +38,13 @@
         <div class="home-link">
             <a href="index.php">Exit</a>
         </div>
+
+        <!-- display error message -->
+        <?php if(!empty($error)) { ?>
+            <div class="alert alert-danger" role="alert" style="text-align: center; margin-top: 10px;">
+                <?php echo $error; ?>
+            </div>
+        <?php } ?>
         
         <!-- <div class="social">
           <div class="go"><i class="fab fa-google"></i>  Google</div>

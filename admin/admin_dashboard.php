@@ -72,13 +72,13 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 				<h3>Tools</h3>
 				<ul>
 					<li>
-						<a href="#">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 4H3a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm-1 14H4V9.227l7.335 6.521a1.003 1.003 0 0 0 1.33-.001L20 9.227V18zm0-11.448l-8 7.11-8-7.111V6h16v.552z"/></svg>
+						<a href="#" class="active">
+						<svg width="24" height="24" viewBox="0 0 24.00 24.00" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#b6bbc6" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.048"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M21.4498 10.275L11.9998 3.1875L2.5498 10.275L2.9998 11.625H3.7498V20.25H20.2498V11.625H20.9998L21.4498 10.275ZM5.2498 18.75V10.125L11.9998 5.0625L18.7498 10.125V18.75H14.9999V14.3333L14.2499 13.5833H9.74988L8.99988 14.3333V18.75H5.2498ZM10.4999 18.75H13.4999V15.0833H10.4999V18.75Z" fill="#b6bbc6"></path> </g></svg>
 							Dashboard
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="customers.php">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21,3h-4V2h-2v1H9V2H7v1H3C2.447,3,2,3.447,2,4v17c0,0.553,0.447,1,1,1h18c0.553,0,1-0.447,1-1V4C22,3.447,21.553,3,21,3z M7,5v1h2V5h6v1h2V5h3v3H4V5H7z M4,20V10h16v10H4z"/><path d="M11,15.586l-1.793-1.793l-1.414,1.414l2.5,2.5C10.488,17.902,10.744,18,11,18s0.512-0.098,0.707-0.293l5-5l-1.414-1.414 L11,15.586z"/></svg>
 							Customers
 						</a>
@@ -118,7 +118,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					</div>
 					
 					<div class="box-content">
-						<span class="big"><?php foreach ($water_usage as $w_usage) { echo $w_usage['total_usage']; } ?></span>
+						<span class="big"><?php foreach($water_usage as $w_usage) {echo $w_usage['total_usage'];} ?></span>
 						Water usage (L)
 					</div>
 				</div>
@@ -152,7 +152,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					
 					<div class="box-content">
 						<span class="big"><?php foreach ($electricity_bill as $e_bill) { echo $e_bill['total_bill']; } ?></span>
-						Electricity usage (MWK)
+						Electricity bill (MWK)
 					</div>
 				</div>
 
@@ -163,7 +163,7 @@ if (isset($_SESSION['admin_id']) && !empty($_SESSION['admin_id'])) {
 					
 					<div class="box-content">
 						<span class="big"><?php foreach ($monthly_bill as $t_bill) { echo $t_bill['total_bill']; } ?></span>
-						monthly bill (MWK)
+						Monthly bill (MWK)
 					</div>
 				</div>
 			</section>

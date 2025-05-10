@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (isset($_SESSION['error'])) {
+    $error = $_SESSION['error']; // Retrieve error message from session
+    unset($_SESSION['error']); // Clear the error message after displaying it
+} else {
+    $error = null; // Initialize error variable if not set
+}
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <body>
@@ -17,7 +27,6 @@
     </div>
     <form action="../php/admin.php" method="POST">
         <h3>Login Here</h3>
-
         <label for="username">Username</label>
         <input type="text" placeholder="Email or Phone" name="username">
 
@@ -25,6 +34,13 @@
         <input type="password" placeholder="Password" name="password">
 
         <button type="submit" name="submit">Login</button>
+
+        <!-- display error message -->
+        <?php if(!empty($error)) { ?>
+            <div class="alert alert-danger" role="alert" style="text-align: center; margin-top: 10px;">
+                <?php echo $error; ?>
+            </div>
+        <?php } ?>
     
         <!-- <div class="social">
           <div class="go"><i class="fab fa-google"></i>  Google</div>

@@ -24,12 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: ../user_dashboard.php"); // Redirect to dashboard page
         exit(); // Ensure no further code is executed after the redirect
     } else {
-        echo "<script>alert('Invalid login credentials')</script>";
+        $_SESSION['error'] = "Invalid username or password"; // Set error message in session
         header("Location: ../login.php"); // Redirect to dashboard page
         exit(); // Ensure no further code is executed after the alert
     }
 } else {
-    echo "<script>alert(Invalid login attempt.)</script>";
+    $_SESSION['error'] = "Invalid login attempt"; // Set error message in session
     header("Location: ../user_dashboard.php"); // Redirect to dashboard page
     exit(); // Ensure no further code is executed if the request method is not POST
 }
